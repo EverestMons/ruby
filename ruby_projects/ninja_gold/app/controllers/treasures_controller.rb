@@ -10,22 +10,27 @@ end
 
 def world
   gold
+  session[:total] = 0
 end
 
+def farm_gold
+  gold
+  session[:total] += @farm
+  redirect_to 'world'
+end
+
+
 def give_gold
-  @gold = 0
-  if params[:farm]
-    @gold += @farm
-  end
   if params[:house]
-    @gold += @house
+    session[total] += @house
   end
   if params[:cave]
-    @gold += @cave
+    session[total] += @cave
   end
   if params[:casino]
-    @gold += @casino
+    session[total] += @casino
   end
+  redirect_to 'world'
 
   end
 
