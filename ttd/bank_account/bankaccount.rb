@@ -14,11 +14,11 @@ class BankAccount
   end
 
   def show_all
-    puts User:  @user, Checking: @checking, Saving: @saving, show_account
+    puts User:  @user, Checking: @checking, Saving: @saving
   end
 
   def show_checking
-    puts checking
+   @checking
   end
 
   def withdraw_checking x
@@ -54,7 +54,7 @@ class BankAccount
   end
 
   def total
-    puts "You're total balance is " + (@checking + @saving).to_s
+    (@checking + @saving)
   end
 
 
@@ -80,12 +80,3 @@ class BankAccount
     end
 
 end
-
-user = BankAccount.new("Mark", 500, 10000)
-user.show_account
-user.show_checking
-user.show_saving
-user.deposit_checking 100
-user.withdraw_checking 476
-user.show_saving
-user.show_all
