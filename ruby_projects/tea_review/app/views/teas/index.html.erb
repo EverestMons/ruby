@@ -1,0 +1,25 @@
+<% if session[:user] %>
+<nav>
+  Hello <%= session[:user]['first_name'] %>
+  <a href="/users/logout">Logout</a>
+</nav>
+<% else %>
+<a href="/users">Login</a>
+<% end %>
+<h1>Homepage</h1>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Rating</th>
+  </tr>
+  <tr>
+    <% @tea.each do |tea| %>
+    <td> <%= tea.name %></td>
+    <td> <%= tea.kind %></td>
+    <td> <%= tea.rating %></td>
+    <% end %>
+  </tr>
+
+
+</table>
