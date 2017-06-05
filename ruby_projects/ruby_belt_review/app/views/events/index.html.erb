@@ -1,0 +1,53 @@
+<% if !session[:user_id] %>
+<% redirect_to '/users' %>
+<% end %>
+Hello <%= session[:user_name] %>!
+<a href="/users/logout">Logout</a>
+<h3> Events Near By:</h3>
+<hr />
+<% @user_events.each do |event| %>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Date</th>
+    <th>City</th>
+    <th>State</th>
+    <th>Host</th>
+    <th>RSVP</th>
+  </tr>
+  <tr>
+    <td><%= event.name %></td>
+    <td><%= event.datetime %></td>
+    <td><%= event.city %></td>
+    <td><%= event.state %></td>
+    <td><%= event.host.first_name %></td>
+    <td><a href="users/rsvp">Join</a></td>
+  </tr>
+</table>
+<% end %>
+<hr />
+<h3>Other Events</h3>
+<hr />
+<% @not_user_events.each do |event| %>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Date</th>
+    <th>City</th>
+    <th>State</th>
+    <th>Host</th>
+    <th>RSVP</th>
+  </tr>
+  <tr>
+    <td><%= event.name %></td>
+    <td><%= event.datetime %></td>
+    <td><%= event.city %></td>
+    <td><%= event.state %></td>
+    <td><%= event.host.first_name %></td>
+    <td><a href="users/rsvp">Join</a></td>
+  </tr>
+</table>
+<% end %>
+<hr />
+<h4><a href="events/new"> Or Host An Event</h3></a>
+  <%= session[:user_state] %>

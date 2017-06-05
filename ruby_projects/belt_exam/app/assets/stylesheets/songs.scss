@@ -1,0 +1,11 @@
+// Place all the styles related to the songs controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.songs_table{
+  text-align: center;
+  border: 5px solid black;
+  border-collapse: collapse;
+}
+.table_row{
+  border: 2px solid black;
+}

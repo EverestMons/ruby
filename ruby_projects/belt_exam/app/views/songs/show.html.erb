@@ -1,0 +1,8 @@
+<h3><%=@song.title%>-<%=@song.artist%></h3>
+
+<h4>Other users who have added this song:</h4>
+<% @adds.each do |add| %>
+
+<%= add.user.first_name %><br />
+
+<%end%>

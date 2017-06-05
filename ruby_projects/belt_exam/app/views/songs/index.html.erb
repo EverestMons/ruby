@@ -1,0 +1,30 @@
+<% if !session[:user_id] %>
+<% redirect_to '/users' %>
+<% end %>
+Hello <%= session[:user_name] %>!
+<a href="/users/logout">Logout</a>
+<h4>All the songs in our hub:</h4>
+<table class='songs_table'>
+  <tr class='table_row'>
+    <th>Title</th>
+    <th>Artist</th>
+    <th>No. of Times Songs Has Been Added</th>
+    <th>Add to Playlist</th>
+  </tr>
+  <% @songs.each do |song|%>
+  <tr>
+    <td> <a href="songs/show/<%= song.id %>"><%=song.title %></a></td>
+    <td><%=song.artist %></td>
+    <td><%=song.adds %></td>
+    <td><a href="songs/add/<%= song.id %>">Add</a></td>
+    <%end%>
+  </tr>
+</table>
+<h3>Add a new song:</h3>
+<form  action="songs/create" method="post">
+  <input type="text" name="song[title]" placeholder="Title">
+  <input type="text" name="song[artist]" placeholder="Artist">
+  <input type="hidden" name="song[adds]" value="0">
+  <input type="submit" name="" value="Submit">
+  <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+</form>

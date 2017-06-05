@@ -7,7 +7,7 @@ class CreateRecords < ActiveRecord::Migration[5.1]
 
       t.timestamps
     end
-    add_foreign_key :records, :users, column: :sender_id
-    add_foreign_key :records, :users, column: :receiver_id
+    # add_foreign_key :records, :users, column: :sender_id
+    # add_foreign_key :records, :users, column: :receiver_id
   end
 end

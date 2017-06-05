@@ -1,0 +1,11 @@
+<h2>Create a New Event</h2>
+
+<form class="" action="/events/create" method="post">
+<input type="text" name="event[name]" placeholder="Name">
+<input type="date" name="event[time]" placeholder="Date">
+<input type="text" name="event[city]" placeholder="City">
+<input type="text" name="event[state]" placeholder="State">
+<!-- <input type="hidden" name="event[host]" value="<%= session[:user]%>"> -->
+<input type="submit" name="" value="Submit">
+<input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+</form>

@@ -1,0 +1,666 @@
+Last login: Wed May 24 17:23:33 on ttys001
+Welcome Mark, it's time to conquer the world.
+[Marks-MacBook-Air]: ~/Desktop/dojoAssignments/ruby/ruby_projects/ruby_belt_review$ rails c
+Running via Spring preloader in process 87464
+Loading development environment (Rails 5.1.1)
+2.4.0 :001 > Event.new
+ => #<Event id: nil, host_id: nil, datetime: nil, city: nil, state: nil, created_at: nil, updated_at: nil> 
+2.4.0 :002 > Hirb.enable
+ => true 
+2.4.0 :003 > Event.new
++----+---------+----------+------+-------+------------+------------+
+| id | host_id | datetime | city | state | created_at | updated_at |
++----+---------+----------+------+-------+------------+------------+
+|    |         |          |      |       |            |            |
++----+---------+----------+------+-------+------------+------------+
+1 row in set
+2.4.0 :004 > 
+2.4.0 :005 >   User.all
+  User Load (1.6ms)  SELECT "users".* FROM "users"
++----+-----------+-----------+-----------+-----------+----------+-------+-----------+-----------+
+| id | first_... | last_name | email     | passwo... | city     | state | create... | update... |
++----+-----------+-----------+-----------+-----------+----------+-------+-----------+-----------+
+| 1  | Mark      | Lehn      | markle... | $2a$10... | Chicago  | IL    | 2017-0... | 2017-0... |
+| 2  | David     | Lehn      | davidl... | $2a$10... | Minne... | MN    | 2017-0... | 2017-0... |
+| 3  | Daniel    | Lehn      | daniel... | $2a$10... | Eden ... | MN    | 2017-0... | 2017-0... |
+| 4  | Katherine | Lehn      | kateri... | $2a$10... | Three... | WI    | 2017-0... | 2017-0... |
++----+-----------+-----------+-----------+-----------+----------+-------+-----------+-----------+
+4 rows in set
+2.4.0 :006 > m = User.find(1)
+  User Load (0.3ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?  [["id", 1], ["LIMIT", 1]]
++----+-----------+-----------+-----------+-----------+---------+-------+-----------+------------+
+| id | first_... | last_name | email     | passwo... | city    | state | create... | updated_at |
++----+-----------+-----------+-----------+-----------+---------+-------+-----------+------------+
+| 1  | Mark      | Lehn      | markle... | $2a$10... | Chicago | IL    | 2017-0... | 2017-05... |
++----+-----------+-----------+-----------+-----------+---------+-------+-----------+------------+
+1 row in set
+2.4.0 :007 > m.events
+ActiveRecord::HasManyThroughAssociationNotFoundError: Could not find the association :attendees in model User
+	from (irb):7
+2.4.0 :008 > exit
+[Marks-MacBook-Air]: ~/Desktop/dojoAssignments/ruby/ruby_projects/ruby_belt_review$ rake db:migrate
+[Marks-MacBook-Air]: ~/Desktop/dojoAssignments/ruby/ruby_projects/ruby_belt_review$ rails c
+Running via Spring preloader in process 90584
+Loading development environment (Rails 5.1.1)
+2.4.0 :001 > m = User.find(1)
+  User Load (0.7ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?  [["id", 1], ["LIMIT", 1]]
+ => #<User id: 1, first_name: "Mark", last_name: "Lehn", email: "marklehn@icloud.com", password_digest: "$2a$10$7VNkJ1I2frCFJ2kxdTmT/e7u2TTirXPWDQkrS0UVccx...", city: "Chicago", state: "IL", created_at: "2017-05-25 18:01:36", updated_at: "2017-05-25 18:01:36"> 
+2.4.0 :002 > Hirb.enable
+ => true 
+2.4.0 :003 > m = User.find(1)
+  User Load (0.4ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?  [["id", 1], ["LIMIT", 1]]
++----+-----------+-----------+-----------+-----------+---------+-------+-----------+------------+
+| id | first_... | last_name | email     | passwo... | city    | state | create... | updated_at |
++----+-----------+-----------+-----------+-----------+---------+-------+-----------+------------+
+| 1  | Mark      | Lehn      | markle... | $2a$10... | Chicago | IL    | 2017-0... | 2017-05... |
++----+-----------+-----------+-----------+-----------+---------+-------+-----------+------------+
+1 row in set
+2.4.0 :004 > m.events
+  Event Load (0.6ms)  SELECT "events".* FROM "events" INNER JOIN "attendees" ON "events"."id" = "attendees"."event_id" WHERE "attendees"."user_id" = ?  [["user_id", 1]]
+ => #<ActiveRecord::Associations::CollectionProxy []> 
+2.4.0 :005 > Event.new
++----+---------+----------+------+-------+------------+------------+
+| id | host_id | datetime | city | state | created_at | updated_at |
++----+---------+----------+------+-------+------------+------------+
+|    |         |          |      |       |            |            |
++----+---------+----------+------+-------+------------+------------+
+1 row in set
+2.4.0 :006 > Event.attendees
+NoMethodError: undefined method `attendees' for #<Class:0x007fc4297a5068>
+	from (irb):6
+2.4.0 :007 > Event.all
+  Event Load (4.7ms)  SELECT "events".* FROM "events"
+ => #<ActiveRecord::Relation []> 
+2.4.0 :008 > ^C
+2.4.0 :008 > ^C
+2.4.0 :008 > exit
+[Marks-MacBook-Air]: ~/Desktop/dojoAssignments/ruby/ruby_projects/ruby_belt_review$ rake db:drop
+Dropped database 'db/development.sqlite3'
+Database 'db/test.sqlite3' does not exist
+[Marks-MacBook-Air]: ~/Desktop/dojoAssignments/ruby/ruby_projects/ruby_belt_review$ rake db:migrate
+== 20170525155821 CreateEvents: migrating =====================================
+-- create_table(:events)
+   -> 0.0022s
+== 20170525155821 CreateEvents: migrated (0.0023s) ============================
+
+== 20170525155928 CreateAttendees: migrating ==================================
+-- create_table(:attendees)
+   -> 0.0030s
+== 20170525155928 CreateAttendees: migrated (0.0031s) =========================
+
+== 20170525160118 CreateMessages: migrating ===================================
+-- create_table(:messages)
+   -> 0.0029s
+== 20170525160118 CreateMessages: migrated (0.0030s) ==========================
+
+== 20170525162101 CreateUsers: migrating ======================================
+-- create_table(:users)
+   -> 0.0012s
+== 20170525162101 CreateUsers: migrated (0.0013s) =============================
+
+[Marks-MacBook-Air]: ~/Desktop/dojoAssignments/ruby/ruby_projects/ruby_belt_review$ rails c
+Running via Spring preloader in process 91444
+Loading development environment (Rails 5.1.1)
+2.4.0 :001 > Hirb.enable
+ => true 
+2.4.0 :002 > User.all
+  User Load (1.2ms)  SELECT "users".* FROM "users"
+ => #<ActiveRecord::Relation []> 
+2.4.0 :003 > Event.new
++----+---------+------+----------+------+-------+------------+------------+
+| id | host_id | name | datetime | city | state | created_at | updated_at |
++----+---------+------+----------+------+-------+------------+------------+
+|    |         |      |          |      |       |            |            |
++----+---------+------+----------+------+-------+------------+------------+
+1 row in set
+2.4.0 :004 > ^C
+2.4.0 :004 > exit
+[Marks-MacBook-Air]: ~/Desktop/dojoAssignments/ruby/ruby_projects/ruby_belt_review$ rake db:migrate
+[Marks-MacBook-Air]: ~/Desktop/dojoAssignments/ruby/ruby_projects/ruby_belt_review$ rails c
+Running via Spring preloader in process 92158
+Loading development environment (Rails 5.1.1)
+2.4.0 :001 > exit
+[Marks-MacBook-Air]: ~/Desktop/dojoAssignments/ruby/ruby_projects/ruby_belt_review$ rails db:seed[Marks-MacBook-Air]: ~/Desktop/dojoAssignments/ruby/ruby_projects/ruby_belt_review$ rails c
+Running via Spring preloader in process 92181
+Loading development environment (Rails 5.1.1)
+2.4.0 :001 > User.new
+ => #<User id: nil, first_name: nil, last_name: nil, email: nil, password_digest: nil, city: nil, state: nil, created_at: nil, updated_at: nil> 
+2.4.0 :002 > Hirb.enable
+ => true 
+2.4.0 :003 > User.new
++----+------------+-----------+-------+--------------+------+-------+------------+------------+
+| id | first_name | last_name | email | password_... | city | state | created_at | updated_at |
++----+------------+-----------+-------+--------------+------+-------+------------+------------+
+|    |            |           |       |              |      |       |            |            |
++----+------------+-----------+-------+--------------+------+-------+------------+------------+
+1 row in set
+2.4.0 :004 > User.all
+  User Load (0.3ms)  SELECT "users".* FROM "users"
++----+-----------+-----------+-----------+-----------+----------+-------+-----------+-----------+
+| id | first_... | last_name | email     | passwo... | city     | state | create... | update... |
++----+-----------+-----------+-----------+-----------+----------+-------+-----------+-----------+
+| 1  | Mark      | Lehn      | markle... | $2a$10... | Chicago  | IL    | 2017-0... | 2017-0... |
+| 2  | David     | Lehn      | davidl... | $2a$10... | Minne... | MN    | 2017-0... | 2017-0... |
+| 3  | Daniel    | Lehn      | daniel... | $2a$10... | Eden ... | MN    | 2017-0... | 2017-0... |
+| 4  | Katherine | Lehn      | kateri... | $2a$10... | Three... | WI    | 2017-0... | 2017-0... |
++----+-----------+-----------+-----------+-----------+----------+-------+-----------+-----------+
+4 rows in set
+2.4.0 :005 > m = User.find(1)
+  User Load (0.3ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?  [["id", 1], ["LIMIT", 1]]
++----+-----------+-----------+-----------+-----------+---------+-------+-----------+------------+
+| id | first_... | last_name | email     | passwo... | city    | state | create... | updated_at |
++----+-----------+-----------+-----------+-----------+---------+-------+-----------+------------+
+| 1  | Mark      | Lehn      | markle... | $2a$10... | Chicago | IL    | 2017-0... | 2017-05... |
++----+-----------+-----------+-----------+-----------+---------+-------+-----------+------------+
+1 row in set
+2.4.0 :006 > m.hosted_events
+NameError: uninitialized constant User::HostedEvent
+	from (irb):6
+2.4.0 :007 > reload!
+Reloading...
+ => true 
+2.4.0 :008 > m = User.find(1)
+  User Load (0.2ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?  [["id", 1], ["LIMIT", 1]]
++----+-----------+-----------+-----------+-----------+---------+-------+-----------+------------+
+| id | first_... | last_name | email     | passwo... | city    | state | create... | updated_at |
++----+-----------+-----------+-----------+-----------+---------+-------+-----------+------------+
+| 1  | Mark      | Lehn      | markle... | $2a$10... | Chicago | IL    | 2017-0... | 2017-05... |
++----+-----------+-----------+-----------+-----------+---------+-------+-----------+------------+
+1 row in set
+2.4.0 :009 > m.hosted_events
+NameError: uninitialized constant User::HostedEvent
+	from (irb):9
+2.4.0 :010 > reload! 
+Reloading...
+ => true 
+2.4.0 :011 > m = User.find(1)
+  User Load (0.1ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?  [["id", 1], ["LIMIT", 1]]
++----+-----------+-----------+-----------+-----------+---------+-------+-----------+------------+
+| id | first_... | last_name | email     | passwo... | city    | state | create... | updated_at |
++----+-----------+-----------+-----------+-----------+---------+-------+-----------+------------+
+| 1  | Mark      | Lehn      | markle... | $2a$10... | Chicago | IL    | 2017-0... | 2017-05... |
++----+-----------+-----------+-----------+-----------+---------+-------+-----------+------------+
+1 row in set
+2.4.0 :012 > m.hosted_events
+NoMethodError: undefined method `hosted_events' for #<User:0x007fc4934cbf80>
+Did you mean?  hosted_event
+               hosted_event=
+               hosted_event_ids
+               hosted_event_ids=
+	from (irb):12
+2.4.0 :013 > m.hosted_event
+NameError: uninitialized constant User::HostedEvent
+	from (irb):13
+2.4.0 :014 > reload!
+Reloading...
+ => true 
+2.4.0 :015 > m = User.find(1)
+  User Load (0.2ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?  [["id", 1], ["LIMIT", 1]]
++----+-----------+-----------+-----------+-----------+---------+-------+-----------+------------+
+| id | first_... | last_name | email     | passwo... | city    | state | create... | updated_at |
++----+-----------+-----------+-----------+-----------+---------+-------+-----------+------------+
+| 1  | Mark      | Lehn      | markle... | $2a$10... | Chicago | IL    | 2017-0... | 2017-05... |
++----+-----------+-----------+-----------+-----------+---------+-------+-----------+------------+
+1 row in set
+2.4.0 :016 > m.hosted_events
+NameError: uninitialized constant User::HostedEvent
+	from (irb):16
+2.4.0 :017 > m.hosted_event
+NoMethodError: undefined method `hosted_event' for #<User:0x007fc497069ab0>
+Did you mean?  hosted_events
+               hosted_events=
+	from (irb):17
+2.4.0 :018 > m.hosted_events
+NameError: uninitialized constant User::HostedEvent
+	from (irb):18
+2.4.0 :019 > Event.new
++----+---------+------+----------+------+-------+------------+------------+
+| id | host_id | name | datetime | city | state | created_at | updated_at |
++----+---------+------+----------+------+-------+------------+------------+
+|    |         |      |          |      |       |            |            |
++----+---------+------+----------+------+-------+------------+------------+
+1 row in set
+2.4.0 :020 > exit
+[Marks-MacBook-Air]: ~/Desktop/dojoAssignments/ruby/ruby_projects/ruby_belt_review$ rails c
+Running via Spring preloader in process 92684
+Loading development environment (Rails 5.1.1)
+2.4.0 :001 > m = User.find(1)
+  User Load (0.4ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?  [["id", 1], ["LIMIT", 1]]
+ => #<User id: 1, first_name: "Mark", last_name: "Lehn", email: "marklehn@icloud.com", password_digest: "$2a$10$6LqjwO5xI3ekRLaP0/I4yOuLNuD4381O3JfyeFQZV1t...", city: "Chicago", state: "IL", created_at: "2017-05-25 20:30:44", updated_at: "2017-05-25 20:30:44"> 
+2.4.0 :002 > m.hosted_events
+NameError: uninitialized constant User::HostedEvent
+	from (irb):2
+2.4.0 :003 > reload
+NameError: undefined local variable or method `reload' for main:Object
+Did you mean?  reload!
+               load
+	from (irb):3
+2.4.0 :004 > m = User.find(1)
+  User Load (0.3ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?  [["id", 1], ["LIMIT", 1]]
+ => #<User id: 1, first_name: "Mark", last_name: "Lehn", email: "marklehn@icloud.com", password_digest: "$2a$10$6LqjwO5xI3ekRLaP0/I4yOuLNuD4381O3JfyeFQZV1t...", city: "Chicago", state: "IL", created_at: "2017-05-25 20:30:44", updated_at: "2017-05-25 20:30:44"> 
+2.4.0 :005 > m.hosted_events
+NameError: uninitialized constant User::HostedEvent
+	from (irb):5
+2.4.0 :006 > relaod! 
+NoMethodError: undefined method `relaod!' for main:Object
+Did you mean?  reload!
+	from (irb):6
+2.4.0 :007 > reload!
+Reloading...
+ => true 
+2.4.0 :008 > m = User.find(1)
+  User Load (0.3ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?  [["id", 1], ["LIMIT", 1]]
+ => #<User id: 1, first_name: "Mark", last_name: "Lehn", email: "marklehn@icloud.com", password_digest: "$2a$10$6LqjwO5xI3ekRLaP0/I4yOuLNuD4381O3JfyeFQZV1t...", city: "Chicago", state: "IL", created_at: "2017-05-25 20:30:44", updated_at: "2017-05-25 20:30:44"> 
+2.4.0 :009 > m.hosted_events
+NoMethodError: undefined method `hosted_events' for #<User:0x007fc4970e9828>
+Did you mean?  hostedEvents
+               hostedEvents=
+               hostedEvent_ids
+	from (irb):9
+2.4.0 :010 > m.HostedEvents
+NoMethodError: undefined method `HostedEvents' for #<User:0x007fc4970e9828>
+Did you mean?  hostedEvents
+               hostedEvents=
+               hostedEvent_ids
+	from (irb):10
+2.4.0 :011 > m.hostedEvents
+ActiveRecord::HasManyThroughSourceAssociationNotFoundError: Could not find the source association(s) "hostedEvent" or :hostedEvents in model Event. Try 'has_many :hostedEvents, :through => :events, :source => <name>'. Is it one of host, user, attendees, users, or messages?
+	from (irb):11
+2.4.0 :012 > reload!
+Reloading...
+ => true 
+2.4.0 :013 > m = User.find(1)
+  User Load (0.4ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?  [["id", 1], ["LIMIT", 1]]
+ => #<User id: 1, first_name: "Mark", last_name: "Lehn", email: "marklehn@icloud.com", password_digest: "$2a$10$6LqjwO5xI3ekRLaP0/I4yOuLNuD4381O3JfyeFQZV1t...", city: "Chicago", state: "IL", created_at: "2017-05-25 20:30:44", updated_at: "2017-05-25 20:30:44"> 
+2.4.0 :014 > m.hostedEvents
+NameError: uninitialized constant User::HostedEvent
+	from (irb):14
+2.4.0 :015 > reload! 
+Reloading...
+ => true 
+2.4.0 :016 > m = User.find(2)
+  User Load (0.2ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?  [["id", 2], ["LIMIT", 1]]
+ => #<User id: 2, first_name: "David", last_name: "Lehn", email: "davidlehn@icloud.com", password_digest: "$2a$10$ZTp.fDZyWzQ8YBEBY/ps8OuI5jPjGZGHVtM1qKwdzPI...", city: "Minneapolis", state: "MN", created_at: "2017-05-25 20:30:44", updated_at: "2017-05-25 20:30:44"> 
+2.4.0 :017 > m.hostedEvents
+ActiveRecord::HasManyThroughOrderError: Cannot have a has_many :through association 'User#hostedEvents' which goes through 'User#events' before the through association is defined.
+	from (irb):17
+2.4.0 :018 > reload!
+Reloading...
+ => true 
+2.4.0 :019 > m = User.find(2)
+  User Load (0.4ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?  [["id", 2], ["LIMIT", 1]]
+ => #<User id: 2, first_name: "David", last_name: "Lehn", email: "davidlehn@icloud.com", password_digest: "$2a$10$ZTp.fDZyWzQ8YBEBY/ps8OuI5jPjGZGHVtM1qKwdzPI...", city: "Minneapolis", state: "MN", created_at: "2017-05-25 20:30:44", updated_at: "2017-05-25 20:30:44"> 
+2.4.0 :020 > m.hostedEvents
+ActiveRecord::HasManyThroughOrderError: Cannot have a has_many :through association 'User#hostedEvents' which goes through 'User#events' before the through association is defined.
+	from (irb):20
+2.4.0 :021 > reload !
+2.4.0 :022 >   reload!
+Reloading...
+NoMethodError: undefined method `reload' for main:Object
+Did you mean?  reload!
+               load
+	from (irb):21
+2.4.0 :023 > reload!
+Reloading...
+ => true 
+2.4.0 :024 > m = User.find(1)
+  User Load (0.2ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?  [["id", 1], ["LIMIT", 1]]
+ => #<User id: 1, first_name: "Mark", last_name: "Lehn", email: "marklehn@icloud.com", password_digest: "$2a$10$6LqjwO5xI3ekRLaP0/I4yOuLNuD4381O3JfyeFQZV1t...", city: "Chicago", state: "IL", created_at: "2017-05-25 20:30:44", updated_at: "2017-05-25 20:30:44"> 
+2.4.0 :025 > m.hostedEvents
+ActiveRecord::HasManyThroughAssociationNotFoundError: Could not find the association :host in model User
+	from (irb):25
+2.4.0 :026 > reload!
+Reloading...
+ => true 
+2.4.0 :027 > m = User.find(1)
+  User Load (0.2ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?  [["id", 1], ["LIMIT", 1]]
+ => #<User id: 1, first_name: "Mark", last_name: "Lehn", email: "marklehn@icloud.com", password_digest: "$2a$10$6LqjwO5xI3ekRLaP0/I4yOuLNuD4381O3JfyeFQZV1t...", city: "Chicago", state: "IL", created_at: "2017-05-25 20:30:44", updated_at: "2017-05-25 20:30:44"> 
+2.4.0 :028 > m.hostedEvents
+ActiveRecord::HasManyThroughOrderError: Cannot have a has_many :through association 'User#hostedEvents' which goes through 'User#events' before the through association is defined.
+	from (irb):28
+2.4.0 :029 > reload!
+Reloading...
+ => true 
+2.4.0 :030 > m = User.find(1)
+  User Load (0.1ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?  [["id", 1], ["LIMIT", 1]]
+ => #<User id: 1, first_name: "Mark", last_name: "Lehn", email: "marklehn@icloud.com", password_digest: "$2a$10$6LqjwO5xI3ekRLaP0/I4yOuLNuD4381O3JfyeFQZV1t...", city: "Chicago", state: "IL", created_at: "2017-05-25 20:30:44", updated_at: "2017-05-25 20:30:44"> 
+2.4.0 :031 > m.hostedEvents
+ActiveRecord::HasManyThroughAssociationNotFoundError: Could not find the association :Event in model User
+	from (irb):31
+2.4.0 :032 > reload!
+Reloading...
+ => true 
+2.4.0 :033 > m = User.find(1)
+  User Load (0.3ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?  [["id", 1], ["LIMIT", 1]]
+ => #<User id: 1, first_name: "Mark", last_name: "Lehn", email: "marklehn@icloud.com", password_digest: "$2a$10$6LqjwO5xI3ekRLaP0/I4yOuLNuD4381O3JfyeFQZV1t...", city: "Chicago", state: "IL", created_at: "2017-05-25 20:30:44", updated_at: "2017-05-25 20:30:44"> 
+2.4.0 :034 > m.hostedEvents
+ActiveRecord::HasManyThroughSourceAssociationNotFoundError: Could not find the source association(s) :host in model Attendee. Try 'has_many :hostedEvents, :through => :attendees, :source => <name>'. Is it one of user or event?
+	from (irb):34
+2.4.0 :035 > reload!
+Reloading...
+ => true 
+2.4.0 :036 > m = User.find(1)
+  User Load (0.1ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?  [["id", 1], ["LIMIT", 1]]
+ => #<User id: 1, first_name: "Mark", last_name: "Lehn", email: "marklehn@icloud.com", password_digest: "$2a$10$6LqjwO5xI3ekRLaP0/I4yOuLNuD4381O3JfyeFQZV1t...", city: "Chicago", state: "IL", created_at: "2017-05-25 20:30:44", updated_at: "2017-05-25 20:30:44"> 
+2.4.0 :037 > m.hostedEvents
+ActiveRecord::HasManyThroughOrderError: Cannot have a has_many :through association 'User#hostedEvents' which goes through 'User#events' before the through association is defined.
+	from (irb):37
+2.4.0 :038 > Event.new
+ => #<Event id: nil, host_id: nil, name: nil, datetime: nil, city: nil, state: nil, created_at: nil, updated_at: nil> 
+2.4.0 :039 > Hirb.enable
+ => true 
+2.4.0 :040 > Event.new
++----+---------+------+----------+------+-------+------------+------------+
+| id | host_id | name | datetime | city | state | created_at | updated_at |
++----+---------+------+----------+------+-------+------------+------------+
+|    |         |      |          |      |       |            |            |
++----+---------+------+----------+------+-------+------------+------------+
+1 row in set
+2.4.0 :041 > m = User.find(1)
+  User Load (0.2ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?  [["id", 1], ["LIMIT", 1]]
++----+-----------+-----------+-----------+-----------+---------+-------+-----------+------------+
+| id | first_... | last_name | email     | passwo... | city    | state | create... | updated_at |
++----+-----------+-----------+-----------+-----------+---------+-------+-----------+------------+
+| 1  | Mark      | Lehn      | markle... | $2a$10... | Chicago | IL    | 2017-0... | 2017-05... |
++----+-----------+-----------+-----------+-----------+---------+-------+-----------+------------+
+1 row in set
+2.4.0 :042 > m.hosted_events
+NoMethodError: undefined method `hosted_events' for #<User:0x007fc497089220>
+Did you mean?  hostedEvents
+               hostedEvents=
+               hostedEvent_ids
+	from (irb):42
+2.4.0 :043 > m.hostedEvents
+ActiveRecord::HasManyThroughOrderError: Cannot have a has_many :through association 'User#hostedEvents' which goes through 'User#events' before the through association is defined.
+	from (irb):43
+2.4.0 :044 > reload!
+Reloading...
+ => true 
+2.4.0 :045 > m = User.find(1)
+  User Load (0.2ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?  [["id", 1], ["LIMIT", 1]]
++----+-----------+-----------+-----------+-----------+---------+-------+-----------+------------+
+| id | first_... | last_name | email     | passwo... | city    | state | create... | updated_at |
++----+-----------+-----------+-----------+-----------+---------+-------+-----------+------------+
+| 1  | Mark      | Lehn      | markle... | $2a$10... | Chicago | IL    | 2017-0... | 2017-05... |
++----+-----------+-----------+-----------+-----------+---------+-------+-----------+------------+
+1 row in set
+2.4.0 :046 > m.hosted_events
+  Event Load (0.2ms)  SELECT "events".* FROM "events" WHERE "events"."host_id" = ?  [["host_id", 1]]
+ => #<ActiveRecord::Associations::CollectionProxy []> 
+2.4.0 :047 > Event.host.new
+NoMethodError: undefined method `host' for #<Class:0x007fc4973a73a8>
+	from (irb):47
+2.4.0 :048 > Event.all
+  Event Load (0.2ms)  SELECT "events".* FROM "events"
+ => #<ActiveRecord::Relation []> 
+2.4.0 :049 > Event.new
++----+---------+------+----------+------+-------+------------+------------+
+| id | host_id | name | datetime | city | state | created_at | updated_at |
++----+---------+------+----------+------+-------+------------+------------+
+|    |         |      |          |      |       |            |            |
++----+---------+------+----------+------+-------+------------+------------+
+1 row in set
+2.4.0 :050 > Event.create(host:User.find(1), name:'Dinner Party', datetime:'04/27/1994',state:'MN', city:'Mpls')
+  User Load (0.2ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?  [["id", 1], ["LIMIT", 1]]
+   (0.1ms)  begin transaction
+  SQL (1.1ms)  INSERT INTO "events" ("host_id", "name", "city", "state", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)  [["host_id", 1], ["name", "Dinner Party"], ["city", "Mpls"], ["state", "MN"], ["created_at", "2017-05-25 21:19:06.033602"], ["updated_at", "2017-05-25 21:19:06.033602"]]
+   (0.1ms)  rollback transaction
+ActiveRecord::StatementInvalid: SQLite3::SQLException: no such table: main.hosts: INSERT INTO "events" ("host_id", "name", "city", "state", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)
+	from (irb):50
+2.4.0 :051 > Event.create(host:1, name:'Dinner Party', datetime:'04/27/1994',state:'MN', city:'Mpls')
+ActiveRecord::AssociationTypeMismatch: User(#70241170505240) expected, got 1 which is an instance of Integer(#70241128677240)
+	from (irb):51
+2.4.0 :052 > m = User.find(1)
+  User Load (0.3ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?  [["id", 1], ["LIMIT", 1]]
++----+-----------+-----------+-----------+-----------+---------+-------+-----------+------------+
+| id | first_... | last_name | email     | passwo... | city    | state | create... | updated_at |
++----+-----------+-----------+-----------+-----------+---------+-------+-----------+------------+
+| 1  | Mark      | Lehn      | markle... | $2a$10... | Chicago | IL    | 2017-0... | 2017-05... |
++----+-----------+-----------+-----------+-----------+---------+-------+-----------+------------+
+1 row in set
+2.4.0 :053 > Event.create(host:m.id, name:'Dinner Party', datetime:'04/27/1994',state:'MN', city:'Mpls')
+ActiveRecord::AssociationTypeMismatch: User(#70241170505240) expected, got 1 which is an instance of Integer(#70241128677240)
+	from (irb):53
+2.4.0 :054 > Event.create(host:m, name:'Dinner Party', datetime:'04/27/1994',state:'MN', city:'Mpls')
+   (0.1ms)  begin transaction
+  SQL (0.8ms)  INSERT INTO "events" ("host_id", "name", "city", "state", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)  [["host_id", 1], ["name", "Dinner Party"], ["city", "Mpls"], ["state", "MN"], ["created_at", "2017-05-25 21:21:09.489369"], ["updated_at", "2017-05-25 21:21:09.489369"]]
+   (0.1ms)  rollback transaction
+ActiveRecord::StatementInvalid: SQLite3::SQLException: no such table: main.hosts: INSERT INTO "events" ("host_id", "name", "city", "state", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)
+	from (irb):54
+2.4.0 :055 > exit
+[Marks-MacBook-Air]: ~/Desktop/dojoAssignments/ruby/ruby_projects/ruby_belt_review$ rails db:dropDropped database 'db/development.sqlite3'
+Database 'db/test.sqlite3' does not exist
+[Marks-MacBook-Air]: ~/Desktop/dojoAssignments/ruby/ruby_projects/ruby_belt_review$ rails db:seedYou have 4 pending migrations:
+  20170525155821 CreateEvents
+  20170525155928 CreateAttendees
+  20170525160118 CreateMessages
+  20170525162101 CreateUsers
+Run `rails db:migrate` to update your database then try again.
+[Marks-MacBook-Air]: ~/Desktop/dojoAssignments/ruby/ruby_projects/ruby_belt_review$ rake db:migrate
+== 20170525155821 CreateEvents: migrating =====================================
+-- create_table(:events)
+   -> 0.0026s
+== 20170525155821 CreateEvents: migrated (0.0027s) ============================
+
+== 20170525155928 CreateAttendees: migrating ==================================
+-- create_table(:attendees)
+   -> 0.0049s
+== 20170525155928 CreateAttendees: migrated (0.0050s) =========================
+
+== 20170525160118 CreateMessages: migrating ===================================
+-- create_table(:messages)
+   -> 0.0038s
+== 20170525160118 CreateMessages: migrated (0.0038s) ==========================
+
+== 20170525162101 CreateUsers: migrating ======================================
+-- create_table(:users)
+   -> 0.0017s
+== 20170525162101 CreateUsers: migrated (0.0018s) =============================
+
+[Marks-MacBook-Air]: ~/Desktop/dojoAssignments/ruby/ruby_projects/ruby_belt_review$ rails db:seed[Marks-MacBook-Air]: ~/Desktop/dojoAssignments/ruby/ruby_projects/ruby_belt_review$ rails c
+Running via Spring preloader in process 94046
+Loading development environment (Rails 5.1.1)
+2.4.0 :001 > m = User.find(1)
+  User Load (0.2ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?  [["id", 1], ["LIMIT", 1]]
+ => #<User id: 1, first_name: "Mark", last_name: "Lehn", email: "marklehn@icloud.com", password_digest: "$2a$10$TfCj5yMie/a5icMLTLERBe5nJRN3zoXSpAjaUg9gpAK...", city: "Chicago", state: "IL", created_at: "2017-05-25 21:23:55", updated_at: "2017-05-25 21:23:55"> 
+2.4.0 :002 > Event.create(host:m, name:'Dinner Party', datetime:'04/27/1994',state:'MN', city:'Mpls')
+   (0.1ms)  begin transaction
+  SQL (0.6ms)  INSERT INTO "events" ("host_id", "name", "city", "state", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)  [["host_id", 1], ["name", "Dinner Party"], ["city", "Mpls"], ["state", "MN"], ["created_at", "2017-05-25 21:24:20.354595"], ["updated_at", "2017-05-25 21:24:20.354595"]]
+   (1.0ms)  commit transaction
+ => #<Event id: 1, host_id: 1, name: "Dinner Party", datetime: nil, city: "Mpls", state: "MN", created_at: "2017-05-25 21:24:20", updated_at: "2017-05-25 21:24:20"> 
+2.4.0 :003 > Event.all
+  Event Load (0.3ms)  SELECT  "events".* FROM "events" LIMIT ?  [["LIMIT", 11]]
+ => #<ActiveRecord::Relation [#<Event id: 1, host_id: 1, name: "Dinner Party", datetime: nil, city: "Mpls", state: "MN", created_at: "2017-05-25 21:24:20", updated_at: "2017-05-25 21:24:20">]> 
+2.4.0 :004 > Hirb.enable
+ => true 
+2.4.0 :005 > Event.all
+  Event Load (0.5ms)  SELECT "events".* FROM "events"
++----+---------+--------------+----------+------+-------+-------------------+-------------------+
+| id | host_id | name         | datetime | city | state | created_at        | updated_at        |
++----+---------+--------------+----------+------+-------+-------------------+-------------------+
+| 1  | 1       | Dinner Party |          | Mpls | MN    | 2017-05-25 21:... | 2017-05-25 21:... |
++----+---------+--------------+----------+------+-------+-------------------+-------------------+
+1 row in set
+2.4.0 :006 > m.hosted_events
+  Event Load (0.3ms)  SELECT "events".* FROM "events" WHERE "events"."host_id" = ?  [["host_id", 1]]
++----+---------+--------------+----------+------+-------+-------------------+-------------------+
+| id | host_id | name         | datetime | city | state | created_at        | updated_at        |
++----+---------+--------------+----------+------+-------+-------------------+-------------------+
+| 1  | 1       | Dinner Party |          | Mpls | MN    | 2017-05-25 21:... | 2017-05-25 21:... |
++----+---------+--------------+----------+------+-------+-------------------+-------------------+
+1 row in set
+2.4.0 :007 > e = Event.find(1)
+  Event Load (0.4ms)  SELECT  "events".* FROM "events" WHERE "events"."id" = ? LIMIT ?  [["id", 1], ["LIMIT", 1]]
++----+---------+--------------+----------+------+-------+-------------------+-------------------+
+| id | host_id | name         | datetime | city | state | created_at        | updated_at        |
++----+---------+--------------+----------+------+-------+-------------------+-------------------+
+| 1  | 1       | Dinner Party |          | Mpls | MN    | 2017-05-25 21:... | 2017-05-25 21:... |
++----+---------+--------------+----------+------+-------+-------------------+-------------------+
+1 row in set
+2.4.0 :008 > e.attendees
+  Attendee Load (0.2ms)  SELECT "attendees".* FROM "attendees" WHERE "attendees"."event_id" = ?  [["event_id", 1]]
+ => #<ActiveRecord::Associations::CollectionProxy []> 
+2.4.0 :009 > Attendee.create(user:User.find(2), event:Event.find(1))
+  User Load (0.2ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?  [["id", 2], ["LIMIT", 1]]
+  Event Load (0.1ms)  SELECT  "events".* FROM "events" WHERE "events"."id" = ? LIMIT ?  [["id", 1], ["LIMIT", 1]]
+   (0.2ms)  begin transaction
+  SQL (1.8ms)  INSERT INTO "attendees" ("user_id", "event_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)  [["user_id", 2], ["event_id", 1], ["created_at", "2017-05-25 21:26:26.379052"], ["updated_at", "2017-05-25 21:26:26.379052"]]
+   (2.7ms)  commit transaction
++----+---------+----------+-------------------------+-------------------------+
+| id | user_id | event_id | created_at              | updated_at              |
++----+---------+----------+-------------------------+-------------------------+
+| 1  | 2       | 1        | 2017-05-25 21:26:26 UTC | 2017-05-25 21:26:26 UTC |
++----+---------+----------+-------------------------+-------------------------+
+1 row in set
+2.4.0 :010 > e.attendees
+ => #<ActiveRecord::Associations::CollectionProxy []> 
+2.4.0 :011 > e = Event.find(1)
+  Event Load (0.3ms)  SELECT  "events".* FROM "events" WHERE "events"."id" = ? LIMIT ?  [["id", 1], ["LIMIT", 1]]
++----+---------+--------------+----------+------+-------+-------------------+-------------------+
+| id | host_id | name         | datetime | city | state | created_at        | updated_at        |
++----+---------+--------------+----------+------+-------+-------------------+-------------------+
+| 1  | 1       | Dinner Party |          | Mpls | MN    | 2017-05-25 21:... | 2017-05-25 21:... |
++----+---------+--------------+----------+------+-------+-------------------+-------------------+
+1 row in set
+2.4.0 :012 > e.attendees
+  Attendee Load (0.3ms)  SELECT "attendees".* FROM "attendees" WHERE "attendees"."event_id" = ?  [["event_id", 1]]
++----+---------+----------+-------------------------+-------------------------+
+| id | user_id | event_id | created_at              | updated_at              |
++----+---------+----------+-------------------------+-------------------------+
+| 1  | 2       | 1        | 2017-05-25 21:26:26 UTC | 2017-05-25 21:26:26 UTC |
++----+---------+----------+-------------------------+-------------------------+
+1 row in set
+2.4.0 :013 > User.all
+  User Load (3.4ms)  SELECT "users".* FROM "users"
++----+-----------+-----------+-----------+-----------+----------+-------+-----------+-----------+
+| id | first_... | last_name | email     | passwo... | city     | state | create... | update... |
++----+-----------+-----------+-----------+-----------+----------+-------+-----------+-----------+
+| 1  | Mark      | Lehn      | markle... | $2a$10... | Chicago  | IL    | 2017-0... | 2017-0... |
+| 2  | David     | Lehn      | davidl... | $2a$10... | Minne... | MN    | 2017-0... | 2017-0... |
+| 3  | Daniel    | Lehn      | daniel... | $2a$10... | Eden ... | MN    | 2017-0... | 2017-0... |
+| 4  | Katherine | Lehn      | kateri... | $2a$10... | Three... | WI    | 2017-0... | 2017-0... |
++----+-----------+-----------+-----------+-----------+----------+-------+-----------+-----------+
+4 rows in set
+2.4.0 :014 > User.all
+  User Load (2.0ms)  SELECT "users".* FROM "users"
++----+-----------+-----------+-----------+-----------+----------+-------+-----------+-----------+
+| id | first_... | last_name | email     | passwo... | city     | state | create... | update... |
++----+-----------+-----------+-----------+-----------+----------+-------+-----------+-----------+
+| 1  | Mark      | Lehn      | markle... | $2a$10... | Chicago  | IL    | 2017-0... | 2017-0... |
+| 2  | David     | Lehn      | davidl... | $2a$10... | Minne... | MN    | 2017-0... | 2017-0... |
+| 3  | Daniel    | Lehn      | daniel... | $2a$10... | Eden ... | MN    | 2017-0... | 2017-0... |
+| 4  | Katherine | Lehn      | kateri... | $2a$10... | Three... | WI    | 2017-0... | 2017-0... |
++----+-----------+-----------+-----------+-----------+----------+-------+-----------+-----------+
+4 rows in set
+2.4.0 :015 > User.find(4)
+  User Load (0.3ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?  [["id", 4], ["LIMIT", 1]]
++----+-----------+-----------+-----------+-----------+----------+-------+-----------+-----------+
+| id | first_... | last_name | email     | passwo... | city     | state | create... | update... |
++----+-----------+-----------+-----------+-----------+----------+-------+-----------+-----------+
+| 4  | Katherine | Lehn      | kateri... | $2a$10... | Three... | WI    | 2017-0... | 2017-0... |
++----+-----------+-----------+-----------+-----------+----------+-------+-----------+-----------+
+1 row in set
+2.4.0 :016 > k = User.find(4)
+  User Load (0.3ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?  [["id", 4], ["LIMIT", 1]]
++----+-----------+-----------+-----------+-----------+----------+-------+-----------+-----------+
+| id | first_... | last_name | email     | passwo... | city     | state | create... | update... |
++----+-----------+-----------+-----------+-----------+----------+-------+-----------+-----------+
+| 4  | Katherine | Lehn      | kateri... | $2a$10... | Three... | WI    | 2017-0... | 2017-0... |
++----+-----------+-----------+-----------+-----------+----------+-------+-----------+-----------+
+1 row in set
+2.4.0 :017 > 4.email
+NoMethodError: undefined method `email' for 4:Integer
+	from (irb):17
+2.4.0 :018 > k.email
+ => "katerinelehn@icloud.com" 
+2.4.0 :019 > exit
+[Marks-MacBook-Air]: ~/Desktop/dojoAssignments/ruby/ruby_projects/ruby_belt_review$ rails drop:db
+rails aborted!
+Don't know how to build task 'drop:db' (see --tasks)
+/Users/Mack/.rvm/gems/ruby-2.4.0/gems/railties-5.1.1/lib/rails/commands/rake/rake_command.rb:21:in `block in perform'
+/Users/Mack/.rvm/gems/ruby-2.4.0/gems/railties-5.1.1/lib/rails/commands/rake/rake_command.rb:18:in `perform'
+/Users/Mack/.rvm/gems/ruby-2.4.0/gems/railties-5.1.1/lib/rails/command.rb:46:in `invoke'
+/Users/Mack/.rvm/gems/ruby-2.4.0/gems/railties-5.1.1/lib/rails/commands.rb:16:in `<top (required)>'
+/Users/Mack/Desktop/dojoAssignments/ruby/ruby_projects/ruby_belt_review/bin/rails:9:in `require'
+/Users/Mack/Desktop/dojoAssignments/ruby/ruby_projects/ruby_belt_review/bin/rails:9:in `<top (required)>'
+/Users/Mack/.rvm/gems/ruby-2.4.0/gems/spring-2.0.2/lib/spring/client/rails.rb:28:in `load'
+/Users/Mack/.rvm/gems/ruby-2.4.0/gems/spring-2.0.2/lib/spring/client/rails.rb:28:in `call'
+/Users/Mack/.rvm/gems/ruby-2.4.0/gems/spring-2.0.2/lib/spring/client/command.rb:7:in `call'
+/Users/Mack/.rvm/gems/ruby-2.4.0/gems/spring-2.0.2/lib/spring/client.rb:30:in `run'
+/Users/Mack/.rvm/gems/ruby-2.4.0/gems/spring-2.0.2/bin/spring:49:in `<top (required)>'
+/Users/Mack/.rvm/gems/ruby-2.4.0/gems/spring-2.0.2/lib/spring/binstub.rb:31:in `load'
+/Users/Mack/.rvm/gems/ruby-2.4.0/gems/spring-2.0.2/lib/spring/binstub.rb:31:in `<top (required)>'
+/Users/Mack/Desktop/dojoAssignments/ruby/ruby_projects/ruby_belt_review/bin/spring:15:in `require'
+/Users/Mack/Desktop/dojoAssignments/ruby/ruby_projects/ruby_belt_review/bin/spring:15:in `<top (required)>'
+bin/rails:3:in `load'
+bin/rails:3:in `<main>'
+(See full trace by running task with --trace)
+[Marks-MacBook-Air]: ~/Desktop/dojoAssignments/ruby/ruby_projects/ruby_belt_review$ rails db:drop
+Dropped database 'db/development.sqlite3'
+Database 'db/test.sqlite3' does not exist
+[Marks-MacBook-Air]: ~/Desktop/dojoAssignments/ruby/ruby_projects/ruby_belt_review$ rake db:migrate
+== 20170525155821 CreateEvents: migrating =====================================
+-- create_table(:events)
+   -> 0.0022s
+== 20170525155821 CreateEvents: migrated (0.0023s) ============================
+
+== 20170525155928 CreateAttendees: migrating ==================================
+-- create_table(:attendees)
+   -> 0.0032s
+== 20170525155928 CreateAttendees: migrated (0.0033s) =========================
+
+== 20170525160118 CreateMessages: migrating ===================================
+-- create_table(:messages)
+   -> 0.0032s
+== 20170525160118 CreateMessages: migrated (0.0033s) ==========================
+
+== 20170525162101 CreateUsers: migrating ======================================
+-- create_table(:users)
+   -> 0.0011s
+== 20170525162101 CreateUsers: migrated (0.0012s) =============================
+
+[Marks-MacBook-Air]: ~/Desktop/dojoAssignments/ruby/ruby_projects/ruby_belt_review$ rails db:seed
+[Marks-MacBook-Air]: ~/Desktop/dojoAssignments/ruby/ruby_projects/ruby_belt_review$ rails c
+Running via Spring preloader in process 99520
+Loading development environment (Rails 5.1.1)
+2.4.0 :001 > Event.new
+ => #<Event id: nil, host_id: nil, name: nil, datetime: nil, city: nil, state: nil, created_at: nil, updated_at: nil> 
+2.4.0 :002 > Hirb.enable
+ => true 
+2.4.0 :003 > Event.all
+  Event Load (0.7ms)  SELECT "events".* FROM "events"
+ => #<ActiveRecord::Relation []> 
+2.4.0 :004 > Event.new
++----+---------+------+----------+------+-------+------------+------------+
+| id | host_id | name | datetime | city | state | created_at | updated_at |
++----+---------+------+----------+------+-------+------------+------------+
+|    |         |      |          |      |       |            |            |
++----+---------+------+----------+------+-------+------------+------------+
+1 row in set
+2.4.0 :005 > Event.all
+  Event Load (0.2ms)  SELECT "events".* FROM "events"
+ => #<ActiveRecord::Relation []> 
+2.4.0 :006 > Event.all
+  Event Load (0.2ms)  SELECT "events".* FROM "events"
++----+---------+--------------+----------+------+-------+-------------------------+-------------------------+
+| id | host_id | name         | datetime | city | state | created_at              | updated_at              |
++----+---------+--------------+----------+------+-------+-------------------------+-------------------------+
+| 1  | 1       | Dinner Party |          | C    |       | 2017-05-26 12:22:43 UTC | 2017-05-26 12:22:43 UTC |
++----+---------+--------------+----------+------+-------+-------------------------+-------------------------+
+1 row in set
+2.4.0 :007 > Event.where(state:'IL')
+  Event Load (0.6ms)  SELECT "events".* FROM "events" WHERE "events"."state" = ?  [["state", "IL"]]
+ => #<ActiveRecord::Relation []> 
+2.4.0 :008 > Event.all
+  Event Load (0.2ms)  SELECT "events".* FROM "events"
++----+---------+--------------+----------+---------+-------+------------------------+-------------------------+
+| id | host_id | name         | datetime | city    | state | created_at             | updated_at              |
++----+---------+--------------+----------+---------+-------+------------------------+-------------------------+
+| 1  | 1       | Dinner Party |          | C       |       | 2017-05-26 12:22:43... | 2017-05-26 12:22:43 UTC |
+| 2  | 1       | Dinner Party |          | Chicago | IL    | 2017-05-26 12:30:20... | 2017-05-26 12:30:20 UTC |
++----+---------+--------------+----------+---------+-------+------------------------+-------------------------+
+2 rows in set
+2.4.0 :009 > Event.where(state:IL)
+NameError: uninitialized constant IL
+	from (irb):9
+2.4.0 :010 > Event.where(state:'IL')
